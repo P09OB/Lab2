@@ -37,19 +37,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         puntaje = 0;
         preguntas = new ArrayList<Pregunta>();
+        makeQuestion();
+
+
+
+        nextBut.setOnClickListener(this);
+    }
+
+
+    public void makeQuestion () {
         numero1= (int) Math.floor(Math.random()*10 +1);
         numero2= (int) Math.floor(Math.random()*10 +1);
         idPregunta= (int) Math.floor(Math.random()*2 +1);
-
-
         preguntas.add(new Pregunta(idPregunta,numero1,numero2));
 
         for(Pregunta p: preguntas ){
+
+
             p.crearPreguntas();
             preguntaText.setText(p.GeneraPregunta());
         }
-
-        nextBut.setOnClickListener(this);
     }
 
     @Override
@@ -64,16 +71,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Toast.makeText(this,"Correcto",Toast.LENGTH_LONG).show();
                 puntaje +=10;
-                //preguntas.add(new Pregunta(idPregunta,numero1,numero2));
+                makeQuestion();
 
 
             } else {
 
                 Toast.makeText(this,"Mal",Toast.LENGTH_LONG).show();
-                puntaje -=10;
+                if (puntaje > 0){
+
+                    puntaje -=10;
+                }
 
             }
         }
+
+
+        //preguntas.remove(0);
+        Log.e("tamamo", " "+  preguntas.size());
 
         scoreText.setText( " " + puntaje);
 
