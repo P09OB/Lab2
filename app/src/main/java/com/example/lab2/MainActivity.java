@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void makeQuestion () {
         numero1= (int) Math.floor(Math.random()*10 +1);
         numero2= (int) Math.floor(Math.random()*10 +1);
-        idPregunta= (int) Math.floor(Math.random()*3 +1);
+        idPregunta= (int) Math.floor(Math.random()*4 +1);
         preguntas.add(new Pregunta(idPregunta,numero1,numero2));
 
         for(Pregunta p: preguntas ){
