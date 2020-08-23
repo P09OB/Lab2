@@ -51,15 +51,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         greatText = findViewById(R.id.greatText);
 
 
-
-
         puntaje = 0;
         contador = 30;
         preguntas = new ArrayList<Pregunta>();
         makeQuestion();
         nextBut.setOnClickListener(this);
         againButt.setOnClickListener(this);
+        tryAgain();
 
+    }
+
+
+    public void makeQuestion () {
+        numero1= (int) Math.floor(Math.random()*10 +1);
+        numero2= (int) Math.floor(Math.random()*10 +1);
+        idPregunta= (int) Math.floor(Math.random()*3 +1);
+        preguntas.add(new Pregunta(idPregunta,numero1,numero2));
+
+        for(Pregunta p: preguntas ){
+
+            p.crearPreguntas();
+            preguntaText.setText(p.GeneraPregunta());
+        }
+    }
+
+    public void tryAgain() {
 
         new Thread(
                 () ->{
@@ -69,10 +85,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         contador--;
                         runOnUiThread(() -> timeText.setText(""+contador));
                         runOnUiThread(() -> againButt.setVisibility(View.GONE));
+                        runOnUiThread(() -> respuestaEditText.setVisibility(View.VISIBLE));
+                        runOnUiThread(() -> nextBut.setVisibility(View.VISIBLE));
+                        runOnUiThread(() -> preguntaText.setVisibility(View.VISIBLE));
 
                         if(contador <= 0){
                             start = false;
                             runOnUiThread(() -> againButt.setVisibility(View.VISIBLE));
+                            runOnUiThread(() -> respuestaEditText.setVisibility(View.GONE));
+                            runOnUiThread(() -> nextBut.setVisibility(View.GONE));
+                            runOnUiThread(() -> preguntaText.setVisibility(View.GONE));
+                            runOnUiThread(() -> califiText.setText("TIME OUT"));
+
                         }
 
 
@@ -88,21 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ).start();
 
 
-    }
-
-
-    public void makeQuestion () {
-        numero1= (int) Math.floor(Math.random()*10 +1);
-        numero2= (int) Math.floor(Math.random()*10 +1);
-        idPregunta= (int) Math.floor(Math.random()*2 +1);
-        preguntas.add(new Pregunta(idPregunta,numero1,numero2));
-
-        for(Pregunta p: preguntas ){
-
-
-            p.crearPreguntas();
-            preguntaText.setText(p.GeneraPregunta());
-        }
     }
 
     @Override
@@ -148,12 +157,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.againButt:
 
                 Log.e("mal","entre");
+                califiText.setText(" ");
+
                 contador=30;
                 start = true;
+                Log.e("mal",""+start);
+
                 puntaje = 0;
                 greatScore =0;
                 wrongScore =0;
-
+                tryAgain();
 
                 break;
         }
