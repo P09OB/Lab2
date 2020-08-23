@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         puntaje = 0;
-        contador = 0;
+        contador = 30;
         preguntas = new ArrayList<Pregunta>();
         makeQuestion();
         nextBut.setOnClickListener(this);
@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     while(start){
 
-                        contador++;
+                        contador--;
                         runOnUiThread(() -> timeText.setText(""+contador));
                         runOnUiThread(() -> againButt.setVisibility(View.GONE));
 
-                        if(contador >= 30){
+                        if(contador <= 0){
                             start = false;
                             runOnUiThread(() -> againButt.setVisibility(View.VISIBLE));
                         }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.againButt:
 
                 Log.e("mal","entre");
-                contador=0;
+                contador=30;
                 start = true;
                 puntaje = 0;
                 greatScore =0;
