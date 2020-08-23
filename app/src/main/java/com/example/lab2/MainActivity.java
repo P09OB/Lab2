@@ -156,13 +156,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.againButt:
 
-                Log.e("mal","entre");
                 califiText.setText(" ");
 
                 contador=30;
                 start = true;
                 Log.e("mal",""+start);
-
                 puntaje = 0;
                 greatScore =0;
                 wrongScore =0;
