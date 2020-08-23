@@ -16,10 +16,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView preguntaText;
     private EditText respuestaEditText;
     private TextView scoreText;
+    private TextView timeText;
+    private TextView califiText;
+    private Button againButt;
+
     private int numero1;
     private int numero2;
     private int idPregunta;
     private int puntaje;
+    private int contador;
+    private boolean start = true;
 
 
     ArrayList<Pregunta> preguntas;
@@ -34,14 +40,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preguntaText = findViewById(R.id.preguntaText);
         respuestaEditText = findViewById(R.id.respuestaEditText);
         scoreText = findViewById(R.id.scoreText);
+        timeText = findViewById(R.id.timeText);
+        califiText = findViewById(R.id.califiText);
+        againButt = findViewById(R.id.againButt);
 
         puntaje = 0;
+        contador = 0;
         preguntas = new ArrayList<Pregunta>();
         makeQuestion();
-
-
-
         nextBut.setOnClickListener(this);
+
+
+        new Thread(
+                () ->{
+
+                    while(start){
+
+                        contador++;
+                        runOnUiThread(() -> timeText.setText(""+contador));
+                        runOnUiThread(() -> againButt.setVisibility(View.GONE));
+
+                        if(contador >= 10){
+                            start = false;
+                        }
+
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                }
+        ).start();
+
+        if(contador >= 30){
+
+            againButt.setVisibility(View.VISIBLE);
+
+        }
     }
 
 
@@ -66,17 +105,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for(Pregunta p: preguntas ) {
 
+
+
             Log.e("mal",p.getRespuesta()+ " ");
             if (answer.equals( Integer.toString(p.getRespuesta()))) {
-
-                Toast.makeText(this,"Correcto",Toast.LENGTH_LONG).show();
+                califiText.setText("Great");
+                //Toast.makeText(this,"Correcto",Toast.LENGTH_LONG).show();
                 puntaje +=10;
                 makeQuestion();
 
 
             } else {
 
-                Toast.makeText(this,"Mal",Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"Mal",Toast.LENGTH_LONG).show();
+                califiText.setText("Wrong");
                 if (puntaje > 0){
 
                     puntaje -=10;
