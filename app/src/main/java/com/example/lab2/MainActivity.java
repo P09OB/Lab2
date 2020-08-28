@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean sumar = false;
 
 
-    ArrayList<Pregunta> preguntas;
+   Pregunta preguntas;
 
 
     @Override
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         puntaje = 0;
         contador = 30;
-        preguntas = new ArrayList<Pregunta>();
+
         makeQuestion();
         nextBut.setOnClickListener(this);
         againButt.setOnClickListener(this);
@@ -70,15 +70,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         numero2= (int) (Math.random()*10 +1);
         idPregunta= (int) (Math.random()*4);
 
-        preguntas.add(new Pregunta(idPregunta,numero1,numero2));
+        preguntas = new Pregunta(idPregunta,numero1,numero2);
 
-        for(Pregunta p: preguntas ){
 
-            p.crearPreguntas();
-            preguntaText.setText(p.GeneraPregunta());
-            Log.e("mal",""+p.GeneraPregunta());
 
-        }
+        preguntas.crearPreguntas();
+            preguntaText.setText(preguntas.GeneraPregunta());
+            Log.e("mal",""+preguntas.GeneraPregunta());
+
+        
     }
 
     public void tryAgain() {
@@ -134,14 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 String answer = respuestaEditText.getText().toString();
 
-                for(Pregunta p: preguntas ) {
 
 
-                    Log.e("mal",p.getRespuesta()+ " ");
-                    if (answer.equals( Integer.toString(p.getRespuesta()))) {
+
+                    Log.e("mal",preguntas.getRespuesta()+ " ");
+                    if (answer.equals( Integer.toString(preguntas.getRespuesta()))) {
                         sumar = true;
                         restar = false;
-
+                        respuestaEditText.setText("");
 
                         makeQuestion();
 
@@ -149,13 +149,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else{
                         restar = true;
                         sumar = false;
+                        respuestaEditText.setText("");
 
 
 
 
 
 
-                    }
+
                 }
 
                 if(sumar == true){
@@ -163,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     puntaje +=10;
                     greatScore +=1;
                     greatText.setText(""+greatScore);
+
+
 
                 }
 
