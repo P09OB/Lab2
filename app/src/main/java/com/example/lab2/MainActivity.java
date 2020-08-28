@@ -1,4 +1,5 @@
 package com.example.lab2;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int greatScore;
     private int wrongScore;
     private boolean start = true;
+    private boolean restar = false;
+    private boolean sumar = false;
 
 
     ArrayList<Pregunta> preguntas;
@@ -63,15 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void makeQuestion () {
-        numero1= (int) Math.floor(Math.random()*10 +1);
-        numero2= (int) Math.floor(Math.random()*10 +1);
-        idPregunta= (int) Math.floor(Math.random()*4 +1);
+        numero1= (int) (Math.random()*10 +1);
+        numero2= (int) (Math.random()*10 +1);
+        idPregunta= (int) (Math.random()*4);
+
         preguntas.add(new Pregunta(idPregunta,numero1,numero2));
 
         for(Pregunta p: preguntas ){
 
             p.crearPreguntas();
             preguntaText.setText(p.GeneraPregunta());
+            Log.e("mal",""+p.GeneraPregunta());
+
         }
     }
 
@@ -83,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     while(start){
 
                         contador--;
+
+
                         runOnUiThread(() -> timeText.setText(""+contador));
                         runOnUiThread(() -> againButt.setVisibility(View.GONE));
                         runOnUiThread(() -> respuestaEditText.setVisibility(View.VISIBLE));
@@ -91,11 +99,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         if(contador <= 0){
                             start = false;
+                            
                             runOnUiThread(() -> againButt.setVisibility(View.VISIBLE));
                             runOnUiThread(() -> respuestaEditText.setVisibility(View.GONE));
                             runOnUiThread(() -> nextBut.setVisibility(View.GONE));
                             runOnUiThread(() -> preguntaText.setVisibility(View.GONE));
                             runOnUiThread(() -> califiText.setText("TIME OUT"));
+
 
                         }
 
@@ -126,44 +136,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for(Pregunta p: preguntas ) {
 
+
                     Log.e("mal",p.getRespuesta()+ " ");
                     if (answer.equals( Integer.toString(p.getRespuesta()))) {
-                        califiText.setText("Great");
-                        puntaje +=10;
-                        greatScore +=1;
-                        greatText.setText(""+greatScore);
+                        sumar = true;
+                        restar = false;
+
+
                         makeQuestion();
 
 
-                    } else {
+                    } else{
+                        restar = true;
+                        sumar = false;
 
-                        califiText.setText("Wrong");
-                        wrongScore +=1;
-                        wrongText.setText(""+wrongScore);
-                        if (puntaje > 0){
 
-                            puntaje -=10;
-                        }
+
+
+
 
                     }
+                }
+
+                if(sumar == true){
+                    califiText.setText("Great");
+                    puntaje +=10;
+                    greatScore +=1;
+                    greatText.setText(""+greatScore);
+
+                }
+
+                if (restar == true){
+
+                    califiText.setText("Wrong");
+                    wrongScore +=1;
+                    wrongText.setText(""+wrongScore);
+                    if (puntaje > 0){
+
+                        puntaje -=10;
+                    }
+
                 }
 
                 scoreText.setText( " " + puntaje);
 
 
-            break;
+                break;
 
 
             case R.id.againButt:
 
-                califiText.setText(" ");
 
+                califiText.setText(" ");
                 contador=30;
                 start = true;
-                Log.e("mal",""+start);
-                puntaje = 0;
-                greatScore =0;
-                wrongScore =0;
+
+
                 tryAgain();
 
                 break;
