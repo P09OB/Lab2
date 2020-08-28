@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         if(contador <= 0){
                             start = false;
-                            
+
                             runOnUiThread(() -> againButt.setVisibility(View.VISIBLE));
                             runOnUiThread(() -> respuestaEditText.setVisibility(View.GONE));
                             runOnUiThread(() -> nextBut.setVisibility(View.GONE));
