@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             preguntaText.setText(preguntas.GeneraPregunta());
             Log.e("mal",""+preguntas.GeneraPregunta());
 
-        
+
     }
 
     public void tryAgain() {
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 califiText.setText(" ");
                 contador=30;
                 start = true;
-
+                makeQuestion();
 
                 tryAgain();
 
