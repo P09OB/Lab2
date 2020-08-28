@@ -1,5 +1,7 @@
 package com.example.lab2;
 
+import android.util.Log;
+
 public class Pregunta {
 
     private int generarPregunta;
@@ -23,10 +25,18 @@ public class Pregunta {
     public void crearPreguntas(){
 
         switch (generarPregunta){
-                   //SUMA
-            case 0: pregunta = numero1 + " "+ "+" +" "+ numero2;
+            //DIVISIÓN
 
-                    respuesta = numero1 + numero2;
+            case 0:
+
+                if(numero2 >= 1 &&  numero1 >= 1 ) {
+
+                    Log.e("mal","Soy division");
+                    pregunta = numero1 + " " + "÷" + " " + numero2;
+
+                    respuesta = numero1 / numero2;
+
+                }
                 break;
                 // RESTA
             case 1: pregunta = numero1 + " "+ "-" +" "+ numero2;
@@ -38,26 +48,20 @@ public class Pregunta {
 
                 //MULTIPLICACIÓN
 
-            case 2: pregunta = numero1 + " "+ "X" +" "+ numero2;
+            case 2: pregunta = numero1 + " "+ "x" +" "+ numero2;
 
                 respuesta = numero1 * numero2;
 
 
-
                 break;
 
-                //DIVISIÓN
+                //SUMA
 
             case 3:
 
-                if(numero2 >= 1) {
+                pregunta = numero1 + " "+ "+" +" "+ numero2;
 
-
-                    pregunta = numero1 + " " + "÷" + " " + numero2;
-
-                    respuesta = numero1 / numero2;
-
-                }
+                respuesta = numero1 + numero2;
                 break;
 
         }
@@ -69,15 +73,12 @@ public class Pregunta {
 
         return pregunta ;
 
-
-
     }
 
-    public String getPregunta() {
-        return pregunta;
-    }
+
 
     public int getRespuesta() {
+
         return respuesta;
     }
 }
